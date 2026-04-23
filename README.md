@@ -243,5 +243,5 @@ To push this project to your GitHub account:
 ---
 
 <p align="center">
-  Built with ❤️ for the future of recruitment by <strong>Raj Soni</strong>
+  Built with ❤️ for the future of recruitment by <strong>Raj Soni</strong> and <strong>Luckyrajsinh Kathiya</strong>
 </p>
