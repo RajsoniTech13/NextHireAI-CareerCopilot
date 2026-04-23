@@ -1,0 +1,49 @@
+version: '3.8'
+
+services:
+  # MongoDB Database
+  mongodb:
+    image: mongo:7
+    container_name: nexthire-mongodb
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+    restart: unless-stopped
+
+  # Node.js Backend
+  backend:
+    build: ./backend
+    container_name: nexthire-backend
+    ports:
+      - "5002:5002"
+    environment:
+      - MONGODB_URI=mongodb://mongodb:27017/jobapp
+      - JWT_SECRET=nexthire_jwt_secret_key_2024
+      - AI_SERVICE_URL=http://ai-service:5001
+      - PORT=5002
+      - NODE_ENV=production
+    depends_on:
+      - mongodb
+    restart: unless-stopped
+
+  # Python AI Microservice
+  ai-service:
+    build: ./ai-module
+    container_name: nexthire-ai
+    ports:
+      - "5001:5001"
+    restart: unless-stopped
+
+  # React Frontend
+  frontend:
+    build: ./frontend
+    container_name: nexthire-frontend
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+    restart: unless-stopped
+
+volumes:
+  mongo-data:

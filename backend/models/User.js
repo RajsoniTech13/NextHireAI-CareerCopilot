@@ -2,13 +2,46 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 
 const UserSchema = new mongoose.Schema({
-    name: String,
+    name: {
+        type: String,
+        required: true,
+        trim: true
+    },
     email: {
         type: String,
-        unique: true
+        unique: true,
+        required: true,
+        lowercase: true,
+        trim: true
     },
-    password: String,
+    password: {
+        type: String,
+        required: true
+    },
     skills: [String],
+    headline: {
+        type: String,
+        default: ''
+    },
+    location: {
+        type: String,
+        default: ''
+    },
+    experience: {
+        type: String,
+        default: ''
+    },
+    preferences: {
+        jobTypes: { type: [String], default: ['Full-time'] },
+        locations: { type: [String], default: [] },
+        salaryMin: { type: Number, default: 0 },
+        remoteOnly: { type: Boolean, default: false }
+    },
+    activeResumeId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Resume',
+        default: null
+    },
     createdAt: {
         type: Date,
         default: Date.now

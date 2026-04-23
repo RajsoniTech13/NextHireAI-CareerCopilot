@@ -1,7 +1,7 @@
 // frontend/src/services/aiService.js
 import axios from 'axios';
 
-const API_URL = 'http://localhost:5000/api/ai';  // Your Node.js backend
+const API_URL = 'http://localhost:5002/api/ai';  // Your Node.js backend
 
 // Get AI service status
 export const checkAIHealth = async () => {

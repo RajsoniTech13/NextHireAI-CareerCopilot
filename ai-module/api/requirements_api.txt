@@ -1,6 +1,13 @@
 flask
 flask-cors
-joblib
+sentence-transformers
+scikit-learn
 pandas
 numpy
-scikit-learn
+pdfplumber
+python-docx
+joblib
+matplotlib
+seaborn
+wordcloud
+pymongo
