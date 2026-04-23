@@ -7,7 +7,7 @@
   <img src="https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white" />
 </p>
 
-# 🚀 NextHireAI — AI-Powered Career Copilot
+# NextHireAI — AI-Powered Career Copilot
 
 > **Production-Grade AI Career Platform** that transforms the job hunt experience.  
 > Analyze resumes with Transformers AI → Get ATS scores → Match jobs semantically → Track applications in Kanban.
