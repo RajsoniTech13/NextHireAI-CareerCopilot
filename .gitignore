@@ -52,6 +52,7 @@ ai-module/env/
 ai-module/.env
 ai-module/.env.*
 ai-module/*.sqlite3
+ai-module/data/*.csv
 
 # Misc
 *.sqlite3
