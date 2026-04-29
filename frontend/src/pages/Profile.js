@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { Save, Wrench, FileText } from 'lucide-react';
 
 const API = 'http://localhost:5002';
 
@@ -109,8 +110,8 @@ const Profile = () => {
             <p className="text-xs text-surface-400 mt-1">Add skills for better AI job recommendations</p>
           </div>
 
-          <button type="submit" disabled={saving} className="btn-primary">
-            {saving ? 'Saving...' : '💾 Update Profile'}
+          <button type="submit" disabled={saving} className="btn-primary flex items-center justify-center gap-2">
+            {saving ? 'Saving...' : <><Save size={18} /> Update Profile</>}
           </button>
         </form>
       </div>
@@ -118,7 +119,7 @@ const Profile = () => {
       {/* Current Skills */}
       {profile?.skills?.length > 0 && (
         <div className="card p-5 mb-6">
-          <h4 className="font-semibold text-surface-900 mb-3">🛠️ Your Skills</h4>
+          <h4 className="font-semibold text-surface-900 mb-3 flex items-center gap-2"><Wrench className="text-surface-500" size={20} /> Your Skills</h4>
           <div className="flex flex-wrap gap-2">
             {profile.skills.map((s, i) => <span key={i} className="badge-blue">{s}</span>)}
           </div>
@@ -128,7 +129,7 @@ const Profile = () => {
       {/* Resume History */}
       {resumeHistory.length > 0 && (
         <div className="card p-5">
-          <h4 className="font-semibold text-surface-900 mb-3">📄 Resume History</h4>
+          <h4 className="font-semibold text-surface-900 mb-3 flex items-center gap-2"><FileText className="text-surface-500" size={20} /> Resume History</h4>
           <div className="space-y-2">
             {resumeHistory.map((r, i) => (
               <div key={r._id || i} className="flex items-center justify-between p-3 rounded-lg bg-surface-50">

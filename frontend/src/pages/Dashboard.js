@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { BarChart2, Briefcase, Mic, CheckCircle, XCircle, FileText, Target, ClipboardList, Sparkles } from 'lucide-react';
 
 const API = 'http://localhost:5002';
 const AI_API = 'http://localhost:5001';
@@ -122,7 +123,9 @@ const Dashboard = () => {
         <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full -translate-y-1/2 translate-x-1/2" />
         <div className="absolute bottom-0 left-0 w-48 h-48 bg-white/5 rounded-full translate-y-1/2 -translate-x-1/2" />
         <div className="relative">
-          <h1 className="text-2xl sm:text-3xl font-bold">Welcome back, {user?.name || 'User'} 👋</h1>
+          <h1 className="text-2xl sm:text-3xl font-bold flex items-center gap-2">
+            Welcome back, {user?.name || 'User'} <Sparkles className="text-yellow-300" />
+          </h1>
           <p className="text-indigo-200 mt-2">
             {category ? (
               <>Your AI profile: <span className="font-semibold text-white bg-white/20 px-3 py-1 rounded-full text-sm">{category}</span></>
@@ -134,11 +137,11 @@ const Dashboard = () => {
       {/* Stats Grid */}
       <div className="grid grid-cols-2 lg:grid-cols-5 gap-4">
         {[
-          { label: 'Total', value: stats.total, icon: '📊', color: 'text-surface-700' },
-          { label: 'Applied', value: stats.applied, icon: '📨', color: 'text-blue-600' },
-          { label: 'Interview', value: stats.interview, icon: '🎙️', color: 'text-amber-600' },
-          { label: 'Offered', value: stats.offered, icon: '🎉', color: 'text-emerald-600' },
-          { label: 'Rejected', value: stats.rejected, icon: '❌', color: 'text-red-500' },
+          { label: 'Total', value: stats.total, icon: <BarChart2 size={24} />, color: 'text-surface-700' },
+          { label: 'Applied', value: stats.applied, icon: <Briefcase size={24} />, color: 'text-blue-600' },
+          { label: 'Interview', value: stats.interview, icon: <Mic size={24} />, color: 'text-amber-600' },
+          { label: 'Offered', value: stats.offered, icon: <CheckCircle size={24} />, color: 'text-emerald-600' },
+          { label: 'Rejected', value: stats.rejected, icon: <XCircle size={24} />, color: 'text-red-500' },
         ].map((s, i) => (
           <div key={i} className="stat-card animate-slide-up" style={{ animationDelay: `${i * 80}ms` }}>
             <span className="text-lg">{s.icon}</span>
@@ -162,7 +165,7 @@ const Dashboard = () => {
             </>
           ) : (
             <div className="text-center py-4">
-              <p className="text-4xl mb-2">📄</p>
+              <FileText size={48} className="mx-auto text-surface-400 mb-2" />
               <p className="text-sm text-surface-500 mb-3">Upload your resume for an ATS score</p>
               <a href="/resume" className="btn-primary text-xs px-4 py-2">Upload Resume</a>
             </div>
@@ -192,7 +195,7 @@ const Dashboard = () => {
             </div>
           ) : (
             <div className="text-center py-8">
-              <p className="text-3xl mb-2">🎯</p>
+              <Target size={48} className="mx-auto text-surface-400 mb-2" />
               <p className="text-sm text-surface-500">
                 {aiLoading ? 'AI is analyzing your profile...' : 'Upload a resume to get AI recommendations'}
               </p>
@@ -204,9 +207,9 @@ const Dashboard = () => {
       {/* Quick Actions */}
       <div className="grid sm:grid-cols-3 gap-4">
         {[
-          { href: '/resume', icon: '📄', title: 'Analyze Resume', desc: 'Get ATS score & AI insights', color: 'from-indigo-500 to-purple-500' },
-          { href: '/jobs', icon: '🎯', title: 'Match Jobs', desc: 'Semantic AI job matching', color: 'from-emerald-500 to-teal-500' },
-          { href: '/applications', icon: '📋', title: 'Track Applications', desc: 'Kanban-style tracker', color: 'from-amber-500 to-orange-500' },
+          { href: '/resume', icon: <FileText size={20} />, title: 'Analyze Resume', desc: 'Get ATS score & AI insights', color: 'from-indigo-500 to-purple-500' },
+          { href: '/jobs', icon: <Target size={20} />, title: 'Match Jobs', desc: 'Semantic AI job matching', color: 'from-emerald-500 to-teal-500' },
+          { href: '/applications', icon: <ClipboardList size={20} />, title: 'Track Applications', desc: 'Kanban-style tracker', color: 'from-amber-500 to-orange-500' },
         ].map((action, i) => (
           <a key={i} href={action.href}
             className="card p-5 group hover:shadow-lg transition-all duration-300 cursor-pointer">

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { Target, AlertTriangle, BarChart2, Wrench, CheckCircle, XCircle, PlusCircle, MessageSquare } from 'lucide-react';
 
 const AI_API = 'http://localhost:5001';
 
@@ -72,8 +73,8 @@ const JobMatcher = () => {
       </div>
 
       {!resumeText && (
-        <div className="mb-4 p-3 bg-amber-50 border border-amber-200 rounded-lg text-amber-700 text-sm">
-          ⚠️ No resume loaded. <a href="/resume" className="underline font-medium">Upload one first</a>
+        <div className="mb-4 p-3 bg-amber-50 border border-amber-200 rounded-lg text-amber-700 text-sm flex items-center gap-2">
+          <AlertTriangle size={16} /> No resume loaded. <a href="/resume" className="underline font-medium">Upload one first</a>
         </div>
       )}
 
@@ -93,8 +94,8 @@ const JobMatcher = () => {
               className="input-field font-mono text-xs leading-relaxed resize-none"
             />
 
-            <button onClick={analyzeMatch} disabled={loading || aiStatus === 'offline' || !resumeText} className="btn-primary w-full mt-4">
-              {loading ? '⏳ Analyzing with AI...' : '🎯 Analyze Match'}
+            <button onClick={analyzeMatch} disabled={loading || aiStatus === 'offline' || !resumeText} className="btn-primary w-full mt-4 flex items-center justify-center gap-2">
+              {loading ? 'Analyzing with AI...' : <><Target size={18} /> Analyze Match</>}
             </button>
           </div>
         </div>
@@ -125,7 +126,7 @@ const JobMatcher = () => {
               {/* Breakdown */}
               {result.breakdown && (
                 <div className="card p-5">
-                  <h4 className="font-semibold text-surface-900 mb-3">📊 Score Breakdown</h4>
+                  <h4 className="font-semibold text-surface-900 mb-3 flex items-center gap-2"><BarChart2 className="text-surface-500" size={20} /> Score Breakdown</h4>
                   <div className="space-y-3">
                     {[
                       { label: 'Overall Similarity', val: result.breakdown.overall_similarity },
@@ -149,22 +150,22 @@ const JobMatcher = () => {
               {/* Skill Comparison */}
               {result.skill_analysis && (
                 <div className="card p-5">
-                  <h4 className="font-semibold text-surface-900 mb-3">🛠️ Skill Analysis</h4>
+                  <h4 className="font-semibold text-surface-900 mb-3 flex items-center gap-2"><Wrench className="text-surface-500" size={20} /> Skill Analysis</h4>
                   {result.skill_analysis.matching_skills?.length > 0 && (
                     <div className="mb-3">
-                      <p className="text-xs font-medium text-emerald-600 mb-1.5">✅ Matching Skills</p>
+                      <p className="text-xs font-medium text-emerald-600 mb-1.5 flex items-center gap-1"><CheckCircle size={14} /> Matching Skills</p>
                       <div className="flex flex-wrap gap-1.5">{result.skill_analysis.matching_skills.map((s,i) => <span key={i} className="badge-green">{s}</span>)}</div>
                     </div>
                   )}
                   {result.skill_analysis.missing_skills?.length > 0 && (
                     <div className="mb-3">
-                      <p className="text-xs font-medium text-red-600 mb-1.5">❌ Missing Skills (Skill Gap)</p>
+                      <p className="text-xs font-medium text-red-600 mb-1.5 flex items-center gap-1"><XCircle size={14} /> Missing Skills (Skill Gap)</p>
                       <div className="flex flex-wrap gap-1.5">{result.skill_analysis.missing_skills.map((s,i) => <span key={i} className="badge-red">{s}</span>)}</div>
                     </div>
                   )}
                   {result.skill_analysis.extra_skills?.length > 0 && (
                     <div>
-                      <p className="text-xs font-medium text-blue-600 mb-1.5">➕ Your Extra Skills</p>
+                      <p className="text-xs font-medium text-blue-600 mb-1.5 flex items-center gap-1"><PlusCircle size={14} /> Your Extra Skills</p>
                       <div className="flex flex-wrap gap-1.5">{result.skill_analysis.extra_skills.map((s,i) => <span key={i} className="badge-blue">{s}</span>)}</div>
                     </div>
                   )}
@@ -174,7 +175,7 @@ const JobMatcher = () => {
               {/* Legacy skill display */}
               {!result.skill_analysis && (result.resume_skills?.length > 0 || result.job_skills?.length > 0) && (
                 <div className="card p-5">
-                  <h4 className="font-semibold text-surface-900 mb-3">🛠️ Skills Detected</h4>
+                  <h4 className="font-semibold text-surface-900 mb-3 flex items-center gap-2"><Wrench className="text-surface-500" size={20} /> Skills Detected</h4>
                   {result.resume_skills?.length > 0 && (
                     <div className="mb-3">
                       <p className="text-xs font-medium text-surface-500 mb-1.5">Your Skills</p>
@@ -193,7 +194,7 @@ const JobMatcher = () => {
               {/* Explanation */}
               {result.explanation?.length > 0 && (
                 <div className="card p-5">
-                  <h4 className="font-semibold text-surface-900 mb-3">💬 AI Explanation</h4>
+                  <h4 className="font-semibold text-surface-900 mb-3 flex items-center gap-2"><MessageSquare className="text-surface-500" size={20} /> AI Explanation</h4>
                   <ul className="space-y-2">
                     {result.explanation.map((e, i) => (
                       <li key={i} className="text-sm text-surface-600 flex gap-2">
@@ -206,7 +207,7 @@ const JobMatcher = () => {
             </>
           ) : (
             <div className="card p-12 text-center">
-              <p className="text-5xl mb-4">🎯</p>
+              <Target size={64} className="mx-auto text-surface-300 mb-4" />
               <h3 className="text-lg font-semibold text-surface-700">Paste a job description</h3>
               <p className="text-sm text-surface-400 mt-2">Our AI will semantically analyze how well your resume matches the role, provide a score breakdown, and identify skill gaps.</p>
             </div>

@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { Bookmark, Briefcase, Mic, CheckCircle, XCircle, CornerUpLeft, ClipboardList, List, MapPin } from 'lucide-react';
 
 const API = 'http://localhost:5002';
 
 const STATUS_CONFIG = {
-  saved:     { label: 'Saved',     color: 'badge-gray',   icon: '📌' },
-  applied:   { label: 'Applied',   color: 'badge-blue',   icon: '📨' },
-  interview: { label: 'Interview', color: 'badge-yellow', icon: '🎙️' },
-  offered:   { label: 'Offered',   color: 'badge-green',  icon: '🎉' },
-  rejected:  { label: 'Rejected',  color: 'badge-red',    icon: '❌' },
-  withdrawn: { label: 'Withdrawn', color: 'badge-gray',   icon: '🔙' },
+  saved:     { label: 'Saved',     color: 'badge-gray',   icon: <Bookmark size={16} /> },
+  applied:   { label: 'Applied',   color: 'badge-blue',   icon: <Briefcase size={16} /> },
+  interview: { label: 'Interview', color: 'badge-yellow', icon: <Mic size={16} /> },
+  offered:   { label: 'Offered',   color: 'badge-green',  icon: <CheckCircle size={16} /> },
+  rejected:  { label: 'Rejected',  color: 'badge-red',    icon: <XCircle size={16} /> },
+  withdrawn: { label: 'Withdrawn', color: 'badge-gray',   icon: <CornerUpLeft size={16} /> },
 };
 const STATUSES = Object.keys(STATUS_CONFIG);
 
@@ -96,8 +97,8 @@ const Applications = () => {
         </div>
         <div className="flex gap-2">
           <div className="flex bg-surface-100 rounded-lg p-0.5">
-            <button onClick={() => setView('kanban')} className={`px-3 py-1.5 rounded-md text-xs font-medium transition-all ${view === 'kanban' ? 'bg-white shadow-sm text-surface-900' : 'text-surface-500'}`}>📋 Kanban</button>
-            <button onClick={() => setView('list')} className={`px-3 py-1.5 rounded-md text-xs font-medium transition-all ${view === 'list' ? 'bg-white shadow-sm text-surface-900' : 'text-surface-500'}`}>📄 List</button>
+            <button onClick={() => setView('kanban')} className={`px-3 py-1.5 rounded-md text-xs font-medium transition-all ${view === 'kanban' ? 'bg-white shadow-sm text-surface-900' : 'text-surface-500'}`}><span className="flex items-center gap-1"><ClipboardList size={14} /> Kanban</span></button>
+            <button onClick={() => setView('list')} className={`px-3 py-1.5 rounded-md text-xs font-medium transition-all ${view === 'list' ? 'bg-white shadow-sm text-surface-900' : 'text-surface-500'}`}><span className="flex items-center gap-1"><List size={14} /> List</span></button>
           </div>
           <button onClick={() => { setShowForm(!showForm); setEditingId(null); setForm({ company: '', position: '', status: 'applied', location: '', salary: '', notes: '', jobUrl: '' }); }} className="btn-primary text-sm">
             {showForm ? 'Cancel' : '+ Add'}
@@ -146,7 +147,7 @@ const Applications = () => {
                   <div key={app._id} className="card p-3 cursor-pointer group" onClick={() => editApp(app)}>
                     <p className="font-medium text-sm text-surface-900 truncate">{app.position}</p>
                     <p className="text-xs text-surface-500 truncate">{app.company}</p>
-                    {app.location && <p className="text-xs text-surface-400 mt-1">📍 {app.location}</p>}
+                    {app.location && <p className="text-xs text-surface-400 mt-1 flex items-center gap-1"><MapPin size={12} /> {app.location}</p>}
                     <div className="flex gap-1 mt-2 opacity-0 group-hover:opacity-100 transition-opacity">
                       {STATUSES.filter(s => s !== status && !['saved','withdrawn'].includes(s)).map(s => (
                         <button key={s} onClick={(e) => { e.stopPropagation(); updateStatus(app._id, s); }}

@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate, Link, useLocation } from 'react-router-dom';
 import './App.css';
+import { BarChart2, FileText, Target, ClipboardList, User } from 'lucide-react';
 
 import Login from './pages/Login';
 import Register from './pages/Register';
@@ -11,11 +12,11 @@ import JobMatcher from './pages/JobMatcher';
 import Profile from './pages/Profile';
 
 const NAV_ITEMS = [
-  { path: '/dashboard', label: 'Dashboard', icon: '📊' },
-  { path: '/resume', label: 'Resume', icon: '📄' },
-  { path: '/jobs', label: 'Job Matcher', icon: '🎯' },
-  { path: '/applications', label: 'Applications', icon: '📋' },
-  { path: '/profile', label: 'Profile', icon: '👤' },
+  { path: '/dashboard', label: 'Dashboard', icon: <BarChart2 size={18} /> },
+  { path: '/resume', label: 'Resume', icon: <FileText size={18} /> },
+  { path: '/jobs', label: 'Job Matcher', icon: <Target size={18} /> },
+  { path: '/applications', label: 'Applications', icon: <ClipboardList size={18} /> },
+  { path: '/profile', label: 'Profile', icon: <User size={18} /> },
 ];
 
 const Navbar = () => {
@@ -79,7 +80,7 @@ const Navbar = () => {
                 : 'text-surface-500 hover:bg-surface-100'
             }`}
           >
-            {item.icon} {item.label}
+            <span className="flex items-center gap-1.5">{item.icon} {item.label}</span>
           </Link>
         ))}
       </div>

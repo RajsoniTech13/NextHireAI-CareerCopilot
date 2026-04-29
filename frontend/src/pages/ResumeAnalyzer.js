@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import axios from 'axios';
+import { FileText, Search, Save, Edit3, ClipboardList, CheckCircle, XCircle, Wrench, ThumbsUp, AlertTriangle, Lightbulb, Paperclip } from 'lucide-react';
 
 const API = 'http://localhost:5002';
 const AI_API = 'http://localhost:5001';
@@ -155,7 +156,7 @@ const ResumeAnalyzer = () => {
       }
 
       setAnalysis(data);
-      setMessage({ type: 'success', text: `✅ "${selectedFile.name}" parsed and analyzed successfully!` });
+      setMessage({ type: 'success', text: `"${selectedFile.name}" parsed and analyzed successfully!` });
       setParseProgress('');
 
       // Also save to backend
@@ -182,7 +183,7 @@ const ResumeAnalyzer = () => {
           localStorage.setItem('userResume', data.raw_text);
         }
         setAnalysis(data);
-        setMessage({ type: 'success', text: `✅ "${selectedFile.name}" analyzed successfully!` });
+        setMessage({ type: 'success', text: `"${selectedFile.name}" analyzed successfully!` });
       } catch (e2) {
         setMessage({
           type: 'error',
@@ -274,7 +275,7 @@ const ResumeAnalyzer = () => {
                   : 'text-surface-500 hover:text-surface-700'
               }`}
             >
-              <span>📎</span> Upload File
+              <Paperclip size={16} /> Upload File
             </button>
             <button
               onClick={() => setInputMode('paste')}
@@ -284,7 +285,7 @@ const ResumeAnalyzer = () => {
                   : 'text-surface-500 hover:text-surface-700'
               }`}
             >
-              <span>📝</span> Paste Text
+              <Edit3 size={16} /> Paste Text
             </button>
           </div>
 
@@ -317,10 +318,7 @@ const ResumeAnalyzer = () => {
                 {selectedFile ? (
                   <div className="space-y-3">
                     <div className="w-14 h-14 mx-auto rounded-xl bg-emerald-100 flex items-center justify-center">
-                      <span className="text-2xl">
-                        {selectedFile.name.endsWith('.pdf') ? '📕' :
-                         selectedFile.name.endsWith('.docx') || selectedFile.name.endsWith('.doc') ? '📘' : '📄'}
-                      </span>
+                      <FileText size={28} className={selectedFile.name.endsWith('.pdf') ? 'text-red-500' : 'text-blue-500'} />
                     </div>
                     <div>
                       <p className="font-semibold text-surface-900 text-sm">{selectedFile.name}</p>
@@ -336,7 +334,7 @@ const ResumeAnalyzer = () => {
                 ) : (
                   <div className="space-y-3">
                     <div className="w-14 h-14 mx-auto rounded-xl bg-brand-50 flex items-center justify-center">
-                      <span className="text-2xl">📄</span>
+                      <FileText size={28} className="text-brand-500" />
                     </div>
                     <div>
                       <p className="text-sm font-medium text-surface-700">
@@ -372,7 +370,7 @@ const ResumeAnalyzer = () => {
                     </svg>
                     Analyzing...
                   </>
-                ) : '🔍 Upload & Analyze'}
+                ) : <><Search size={18} /> Upload & Analyze</>}
               </button>
 
               {/* Show extracted text preview if available */}
@@ -409,15 +407,15 @@ const ResumeAnalyzer = () => {
                 className="input-field font-mono text-xs leading-relaxed resize-none"
               />
               <div className="flex gap-2 mt-3">
-                <button onClick={analyzeText} disabled={loading} className="btn-primary flex-1">
-                  {loading ? '⏳ Analyzing...' : '🔍 Analyze Resume'}
+                <button onClick={analyzeText} disabled={loading} className="btn-primary flex-1 flex justify-center items-center gap-2">
+                  {loading ? 'Analyzing...' : <><Search size={18} /> Analyze Resume</>}
                 </button>
-                <button onClick={saveResume} disabled={uploading} className="btn-secondary">
-                  {uploading ? '...' : '💾 Save'}
+                <button onClick={saveResume} disabled={uploading} className="btn-secondary flex justify-center items-center gap-2">
+                  {uploading ? '...' : <><Save size={18} /> Save</>}
                 </button>
               </div>
-              <button onClick={() => setResumeText(SAMPLE_RESUME)} className="btn-ghost w-full mt-2 text-xs">
-                📝 Use Sample Resume
+              <button onClick={() => setResumeText(SAMPLE_RESUME)} className="btn-ghost w-full mt-2 text-xs flex justify-center items-center gap-2">
+                <FileText size={16} /> Use Sample Resume
               </button>
             </div>
           )}
@@ -432,9 +430,9 @@ const ResumeAnalyzer = () => {
                 <div className="flex flex-col sm:flex-row items-center gap-6">
                   <ScoreRing score={analysis.atsScore || analysis.ats_score || 0} />
                   <div className="text-center sm:text-left flex-1">
-                    <h3 className="text-lg font-semibold text-surface-900">
-                      {(analysis.atsScore || analysis.ats_score || 0) >= 70 ? '🎉 Great Resume!' :
-                       (analysis.atsScore || analysis.ats_score || 0) >= 50 ? '👍 Good, can improve' : '⚠️ Needs improvement'}
+                    <h3 className="text-lg font-semibold text-surface-900 flex items-center gap-2 justify-center sm:justify-start">
+                      {(analysis.atsScore || analysis.ats_score || 0) >= 70 ? <><CheckCircle className="text-emerald-500" /> Great Resume!</> :
+                       (analysis.atsScore || analysis.ats_score || 0) >= 50 ? <><ThumbsUp className="text-indigo-500" /> Good, can improve</> : <><AlertTriangle className="text-amber-500" /> Needs improvement</>}
                     </h3>
                     {(analysis.predictedCategory || analysis.predicted_category) && (
                       <div className="mt-2">
@@ -450,13 +448,13 @@ const ResumeAnalyzer = () => {
               {/* Section Scores */}
               {analysis.section_scores && Object.keys(analysis.section_scores).length > 0 && (
                 <div className="card p-5">
-                  <h4 className="font-semibold text-surface-900 mb-3">📋 Section Coverage</h4>
+                  <h4 className="font-semibold text-surface-900 mb-3 flex items-center gap-2"><ClipboardList className="text-surface-500" size={20} /> Section Coverage</h4>
                   <div className="grid grid-cols-2 gap-2">
                     {Object.entries(analysis.section_scores).map(([section, status]) => (
                       <div key={section} className={`flex items-center gap-2 p-2 rounded-lg text-sm ${
                         status === 'Present' ? 'bg-emerald-50 text-emerald-700' : 'bg-red-50 text-red-600'
                       }`}>
-                        <span>{status === 'Present' ? '✅' : '❌'}</span>
+                        {status === 'Present' ? <CheckCircle size={16} /> : <XCircle size={16} />}
                         <span className="font-medium capitalize">{section}</span>
                       </div>
                     ))}
@@ -467,7 +465,7 @@ const ResumeAnalyzer = () => {
               {/* Skills */}
               {(analysis.skills?.technical?.length > 0 || analysis.parsedData?.skills?.technical?.length > 0) && (
                 <div className="card p-5">
-                  <h4 className="font-semibold text-surface-900 mb-3">🛠️ Detected Skills</h4>
+                  <h4 className="font-semibold text-surface-900 mb-3 flex items-center gap-2"><Wrench className="text-surface-500" size={20} /> Detected Skills</h4>
                   <div className="flex flex-wrap gap-2">
                     {(analysis.skills?.technical || analysis.parsedData?.skills?.technical || []).map((s, i) => (
                       <span key={i} className="badge-blue">{s}</span>
@@ -480,7 +478,7 @@ const ResumeAnalyzer = () => {
               <div className="grid sm:grid-cols-2 gap-4">
                 {(analysis.strengths?.length > 0) && (
                   <div className="card p-5">
-                    <h4 className="font-semibold text-emerald-700 mb-3">✅ Strengths</h4>
+                    <h4 className="font-semibold text-emerald-700 mb-3 flex items-center gap-2"><CheckCircle size={20} /> Strengths</h4>
                     <ul className="space-y-2">
                       {analysis.strengths.map((s, i) => (
                         <li key={i} className="text-sm text-surface-700 flex gap-2">
@@ -492,7 +490,7 @@ const ResumeAnalyzer = () => {
                 )}
                 {(analysis.weaknesses?.length > 0) && (
                   <div className="card p-5">
-                    <h4 className="font-semibold text-red-600 mb-3">⚠️ Weaknesses</h4>
+                    <h4 className="font-semibold text-red-600 mb-3 flex items-center gap-2"><AlertTriangle size={20} /> Weaknesses</h4>
                     <ul className="space-y-2">
                       {analysis.weaknesses.map((s, i) => (
                         <li key={i} className="text-sm text-surface-700 flex gap-2">
@@ -507,7 +505,7 @@ const ResumeAnalyzer = () => {
               {/* Suggestions */}
               {analysis.suggestions?.length > 0 && (
                 <div className="card p-5">
-                  <h4 className="font-semibold text-brand-700 mb-3">💡 Improvement Suggestions</h4>
+                  <h4 className="font-semibold text-brand-700 mb-3 flex items-center gap-2"><Lightbulb size={20} /> Improvement Suggestions</h4>
                   <ul className="space-y-2">
                     {analysis.suggestions.map((s, i) => (
                       <li key={i} className="text-sm text-surface-700 flex gap-2 p-2 rounded-lg bg-brand-50/50">
@@ -521,7 +519,7 @@ const ResumeAnalyzer = () => {
           ) : (
             <div className="card p-12 text-center">
               <div className="w-20 h-20 mx-auto rounded-2xl bg-gradient-to-br from-brand-100 to-purple-100 flex items-center justify-center mb-4">
-                <span className="text-4xl">📄</span>
+                <FileText size={40} className="text-brand-600" />
               </div>
               <h3 className="text-lg font-semibold text-surface-700">Upload or paste your resume</h3>
               <p className="text-sm text-surface-400 mt-2 max-w-sm mx-auto">
