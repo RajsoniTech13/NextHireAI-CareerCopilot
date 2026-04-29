@@ -104,3 +104,16 @@
 .score-ring circle {
   transition: stroke-dashoffset 1s ease-out;
 }
+
+/* ─── Utilities ─── */
+.line-clamp-6 {
+  display: -webkit-box;
+  -webkit-line-clamp: 6;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* ─── Drop Zone Glow ─── */
+.border-brand-500 {
+  box-shadow: 0 0 20px rgba(99, 102, 241, 0.1);
+}
